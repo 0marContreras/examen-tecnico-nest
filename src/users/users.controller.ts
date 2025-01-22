@@ -1,7 +1,8 @@
-import { Controller, Post, Body, Get, Param, Query, Put, Delete, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Query, Put, Delete, HttpException, HttpStatus, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthGuard } from '../auth/guards/auth.guard';
 
 @Controller('users')
 export class UsersController {
@@ -33,6 +34,7 @@ export class UsersController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Put(':id')
   async updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     try {
@@ -43,6 +45,7 @@ export class UsersController {
     }
   }
 
+  @UseGuards(AuthGuard)
   @Delete(':id')
   async deleteUser(@Param('id') id: string) {
     try {

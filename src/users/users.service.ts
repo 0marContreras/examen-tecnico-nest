@@ -71,4 +71,19 @@ export class UsersService {
 
     await user.destroy();
   }
+
+  async findByEmail(email: string): Promise<User> {
+    try {
+      
+      const user = await this.userModel.findOne({ where: { email} });
+      
+      if (!user) {
+        throw new Error(`El usuario no se encontroo`);
+      }
+      return user;
+    } catch (error) {
+      throw new Error(`error al encontrar el usuario`);
+    }
+  }
+  
 }
